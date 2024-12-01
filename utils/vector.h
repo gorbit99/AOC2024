@@ -33,9 +33,6 @@ size_t VECTOR_FUN(size)(VECTOR_NAME *vec) {
 
 VECTOR_TYPE VECTOR_FUN(at)(VECTOR_NAME *vec, size_t i) {
     assert(i < vec->size);
-    if (i >= vec->size) {
-        abort();
-    }
 
     return vec->data[i];
 }
