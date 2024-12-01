@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 int numberComparator(const void *a, const void *b) {
-    return *(uint32_t *)b - *(uint32_t *)a;
+    return *(uint32_t *)a - *(uint32_t *)b;
 }
 
 int main(int argc, char **argv) {
@@ -32,12 +32,35 @@ int main(int argc, char **argv) {
     qsort(array1, line_count, sizeof(uint32_t), numberComparator);
     qsort(array2, line_count, sizeof(uint32_t), numberComparator);
 
-    uint32_t totalDifference = 0;
-    for (size_t i = 0; i < line_count; i++) {
-        totalDifference += abs((int)array1[i] - (int)array2[i]);
+    uint32_t similarity = 0;
+
+    size_t index1 = 0;
+    size_t index2 = 0;
+    size_t currentCount = 0;
+
+    while (index1 < line_count && index2 < line_count) {
+        if (array1[index1] == array2[index2]) {
+            currentCount++;
+            index2++;
+            continue;
+        }
+
+        if (array1[index1] < array2[index2]) {
+            similarity += currentCount * array1[index1];
+            while (index1 + 1 < line_count
+                   && array1[index1] == array1[index1 + 1]) {
+                similarity += currentCount * array1[index1];
+                index1++;
+            }
+            index1++;
+            currentCount = 0;
+            continue;
+        }
+
+        index2++;
     }
 
-    printf("%u\n", totalDifference);
+    printf("%u\n", similarity);
 
     return 0;
 }
