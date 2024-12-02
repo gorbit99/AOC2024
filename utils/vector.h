@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if defined VECTOR_NAME && defined VECTOR_TYPE
 #define PASTER(x, y) x##y
 #define GLUE(x, y)   PASTER(x, y)
 
@@ -123,3 +124,12 @@ void *VECTOR_FUN(fold)(VECTOR_NAME *vec,
 VECTOR_TYPE *VECTOR_FUN(data)(VECTOR_NAME *vec) {
     return vec->data;
 }
+
+void VECTOR_FUN(clear)(VECTOR_NAME *vec) {
+    vec->size = 0;
+}
+
+#endif
+
+#undef VECTOR_NAME
+#undef VECTOR_TYPE
