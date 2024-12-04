@@ -7,7 +7,11 @@
 #define PASTER(x, y) x##y
 #define GLUE(x, y)   PASTER(x, y)
 
-#define VECTOR_FUN(name) GLUE(GLUE(vector_, VECTOR_TYPE), GLUE(_, name))
+#ifndef VECTOR_FUN_NAME
+#define VECTOR_FUN_NAME VECTOR_TYPE
+#endif
+
+#define VECTOR_FUN(name) GLUE(GLUE(vector_, VECTOR_FUN_NAME), GLUE(_, name))
 
 typedef struct {
     VECTOR_TYPE *data;
@@ -133,3 +137,4 @@ void VECTOR_FUN(clear)(VECTOR_NAME *vec) {
 
 #undef VECTOR_NAME
 #undef VECTOR_TYPE
+#undef VECTOR_FUN_NAME
