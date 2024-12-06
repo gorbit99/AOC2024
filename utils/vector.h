@@ -3,7 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if defined VECTOR_NAME && defined VECTOR_TYPE
+#if !defined(VECTOR_NAME) || !defined(VECTOR_TYPE)
+#error Missing vector type defines!
+#endif
+
 #define PASTER(x, y) x##y
 #define GLUE(x, y)   PASTER(x, y)
 
@@ -133,7 +136,16 @@ void VECTOR_FUN(clear)(VECTOR_NAME *vec) {
     vec->size = 0;
 }
 
-#endif
+VECTOR_NAME VECTOR_FUN(dup)(VECTOR_NAME *vec) {
+    VECTOR_NAME result = {
+            .size = vec->size,
+            .capacity = vec->capacity,
+            .data = malloc(sizeof(VECTOR_TYPE) * vec->capacity),
+    };
+
+    memcpy(result.data, vec->data, sizeof(VECTOR_TYPE) * vec->size);
+    return result;
+}
 
 #undef VECTOR_NAME
 #undef VECTOR_TYPE

@@ -1,5 +1,5 @@
 project('aoc2024', 'c', meson_version: '>= 1.3.0', 
-  default_options: ['c_std=c23'])
+  default_options: ['c_std=c20'])
 
 fs = import('fs')
 
