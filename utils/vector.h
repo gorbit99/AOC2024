@@ -45,6 +45,12 @@ VECTOR_TYPE VECTOR_FUN(at)(VECTOR_NAME *vec, size_t i) {
     return vec->data[i];
 }
 
+VECTOR_TYPE *VECTOR_FUN(at_ptr)(VECTOR_NAME *vec, size_t i) {
+    assert(i < vec->size);
+
+    return &vec->data[i];
+}
+
 void VECTOR_FUN(reserve)(VECTOR_NAME *vec, size_t newCapacity) {
     if (vec->capacity >= newCapacity) {
         return;
