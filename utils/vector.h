@@ -101,6 +101,17 @@ VECTOR_TYPE VECTOR_FUN(shift)(VECTOR_NAME *vec) {
     return value;
 }
 
+VECTOR_TYPE VECTOR_FUN(remove_at)(VECTOR_NAME *vec, size_t i) {
+    assert(i >= 0 && i < vec->size);
+
+    VECTOR_TYPE value = vec->data[i];
+    memmove(&vec->data[i],
+            &vec->data[i + 1],
+            sizeof(VECTOR_TYPE) * (vec->size - i - 1));
+    vec->size--;
+    return value;
+}
+
 void VECTOR_FUN(each)(VECTOR_NAME *vec,
                       void (*callback)(VECTOR_TYPE *value,
                                        size_t i,
